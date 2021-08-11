@@ -4,14 +4,17 @@
     <title>Shooting Game in Virtual Reality</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>   
     <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+    <script src="./Bullets.js"></script>
     
     
   </head>
   <body>
-    <a-scene id="scene">
+    <a-scene id="scene" physics="gravity: -6.4">
 
       <!--Assets-->
-      
+      <a-assets>
+        <a-asset-item id="gun" src="./models/shooter/gun.gltf"></a-asset-item>
+      </a-assets>
       
       <!--Light-->
       <a-entity light="type: ambient; color: yellow; intensity:0.5"></a-entity>
@@ -22,10 +25,15 @@
         camera
         position="0 1.6 0"
         wasd-controls
-        look-controls="pointerLockEnabled: false"        
+        look-controls="pointerLockEnabled: true"        
       >
         
-        <a-cursor></a-cursor>        
+        <a-cursor id="cursor" position="0 0 -1"></a-cursor>        
+      </a-entity>
+
+      <!--Gun-->
+      <a-entity id="gunEntity" position="0 1.6 0" rotation="0 180 0">
+        <a-entity position="0 -0.45 0" scale="0.1 0.1 0.1" gltf-model='#gun'></a-entity>
       </a-entity>
 
       <!--Bullets-->
@@ -46,17 +54,17 @@
       </a-plane>
 
       <!--Boxes-->
-      <a-box position="-2 1.5 -10" color="tomato" depth="1" height="1" width="1"></a-box>
+      <a-box position="-2 1.5 -10" color="tomato" depth="1" height="1" width="1.05" dynamic-body></a-box>
 
-      <a-box position="0 1.5 -10" color="tomato" depth="1" height="1" width="1"></a-box>
+      <a-box position="0 1.5 -10" color="tomato" depth="1" height="1" width="1.05" dynamic-body></a-box>
 
-      <a-box position="2 1.5 -10" color="tomato" depth="1" height="1" width="1"></a-box>
+      <a-box position="2 1.5 -10" color="tomato" depth="1" height="1" width="1.05" dynamic-body></a-box>
 
-      <a-box position="-1 2.5 -10" color="tomato" depth="1" height="1" width="1"></a-box>
+      <a-box position="-1 2.5 -10" color="tomato" depth="1" height="1" width="1.05" dynamic-body></a-box>
 
-      <a-box position="1 2.5 -10" color="tomato" depth="1" height="1" width="1"></a-box>
+      <a-box position="1 2.5 -10" color="tomato" depth="1" height="1" width="1.05" dynamic-body></a-box>
 
-      <a-box position="0 3.5 -10" color="tomato" depth="1" height="1" width="1"></a-box>
+      <a-box position="0 3.5 -10" color="tomato" depth="1" height="1" width="1.05" dynamic-body></a-box>
     </a-scene>
   </body>
 </html>

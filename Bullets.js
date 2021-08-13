@@ -24,10 +24,14 @@ AFRAME.registerComponent('bullets',{
                 //     z: cursorPos.z-pos.z
                 // };
                 // bullet.setAttribute('velocity',resultPos);
-                bullet.setAttribute('velocity',direction.multiplyScalar(-20));
+                bullet.setAttribute('velocity',direction.multiplyScalar(-30));
                 var scene = document.querySelector('#scene');
                 bullet.setAttribute('dynamic-body',{
-                    mass: 3
+                    mass: 0.003,
+                    shape: 'sphere'
+                });
+                bullet.addEventListener('collide',e=>{
+                    this.removeBullet(e);
                 });
                 scene.appendChild(bullet);
                 // cam.appendChild(bullet);
@@ -45,5 +49,21 @@ AFRAME.registerComponent('bullets',{
         var gun = document.querySelector('#gunEntity');
         gun.setAttribute('rotation',rotation);
         gun.setAttribute('position',camera.getAttribute('position'));
+    },
+    removeBullet: function(e) {
+        var bulletEl = e.detail.target.el;
+        var boxEl = e.detail.body.el;
+        if(boxEl.getAttribute('id').includes('box')) {
+            boxEl.setAttribute('material',{
+                opacity: 0.8,
+                transparent: true
+            });
+            var impulse = new CANNON.Vec3(3,3,3);
+            var worldPoint = new CANNON.Vec3().copy(boxEl.getAttribute('position'));
+            boxEl.body.applyImpulse(impulse,worldPoint);
+            bulletEl.removeEventListener('collide',this.shootBullet);
+            var scene = document.querySelector('#scene');
+            scene.removeChild(bulletEl);
+        };
     }
 });

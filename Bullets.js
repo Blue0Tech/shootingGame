@@ -2,6 +2,8 @@ AFRAME.registerComponent('bullets',{
     shootBullet: function() {
         window.addEventListener('keydown',e=>{
             if(e.key=='z') {
+                var shootEntity = document.querySelector('#shootEntity');
+                shootEntity.components.sound.playSound();
                 var bullet = document.createElement('a-entity');
                 bullet.setAttribute('geometry',{
                     primitive: 'sphere',
@@ -41,15 +43,15 @@ AFRAME.registerComponent('bullets',{
     init: function() {
         this.shootBullet();
     },
-    tick: function() {
-        var camera = document.querySelector('#camera');
-        var rotation = camera.getAttribute('rotation');
-        rotation.y+=180;
-        rotation.x*=-1;
-        var gun = document.querySelector('#gunEntity');
-        gun.setAttribute('rotation',rotation);
-        gun.setAttribute('position',camera.getAttribute('position'));
-    },
+    // tick: function() {
+    //     var camera = document.querySelector('#camera');
+    //     var rotation = camera.getAttribute('rotation');
+    //     rotation.y+=180;
+    //     rotation.x*=-1;
+    //     var gun = document.querySelector('#gunEntity');
+    //     gun.setAttribute('rotation',rotation);
+    //     gun.setAttribute('position',camera.getAttribute('position'));
+    // },
     removeBullet: function(e) {
         var bulletEl = e.detail.target.el;
         var boxEl = e.detail.body.el;
